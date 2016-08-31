@@ -54,7 +54,7 @@ public class SitMailerServlet extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		writer.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" "
 				+ "\"http://www.w3.org/TR/html4/loose.dtd\">");
-		writer.write("<html><head><title>Mail Test</title></head><body>");
+		writer.write("<html><head><title>SIT Mailert</title></head><body>");
 		writer.write("<form action='' method='post'>");
 		writer.write("<table style='width: 100%'>");
 		writer.write("<tr>");
