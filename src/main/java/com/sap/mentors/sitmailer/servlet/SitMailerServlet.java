@@ -2,6 +2,10 @@ package com.sap.mentors.sitmailer.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.mail.Message.RecipientType;
@@ -31,6 +35,13 @@ public class SitMailerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(SitMailerServlet.class);
 
+	private static final Map<String, String> SIT_EMAIL;
+    static
+    {
+    	SIT_EMAIL = new HashMap<String, String>();
+    	SIT_EMAIL.put("sitnl", "info@sitnl.nl");
+    }
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -51,8 +62,14 @@ public class SitMailerServlet extends HttpServlet {
 		writer.write("<td><input type='text' size='50' value='' name='fromaddress'></td>");
 		writer.write("</tr>");
 		writer.write("<tr>");
-		writer.write("<td><label>To:</label></td>");
-		writer.write("<td><input type='text' size='50' value='' name='toaddress'></td>");
+		writer.write("<td><label>To:</label></td>");		
+		writer.write("<td><select name='toaddress'>");
+		Iterator<Entry<String, String>> it = SIT_EMAIL.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String,String> emailLink = (Map.Entry<String, String>) it.next();
+			writer.write("<option value='" + emailLink.getKey() + "'>" + emailLink.getKey() + "</option>");			
+		}
+		writer.write("</select></td>");
 		writer.write("</tr>");
 		writer.write("<tr>");
 		writer.write("<td><label>Subject:</label></td>");
@@ -81,7 +98,7 @@ public class SitMailerServlet extends HttpServlet {
 		try {
 			// Parse form parameters
 			String from = request.getParameter("fromaddress");
-			String to = request.getParameter("toaddress");
+			String to = SIT_EMAIL.get(request.getParameter("toaddress"));
 			String subjectText = request.getParameter("subjecttext");
 			String mailText = request.getParameter("mailtext");
 			if (from.isEmpty() || to.isEmpty()) {
@@ -108,8 +125,7 @@ public class SitMailerServlet extends HttpServlet {
 
 			// Confirm mail sending
 			response.getWriter()
-					.println("E-mail was sent (in local scenario stored in '<local-server>/work/mailservice'"
-							+ " - in cloud scenario using configured mail session).");
+					.println("E-mail was sent");
 		} catch (Exception e) {
 			LOGGER.error("Mail operation failed", e);
 			throw new ServletException(e);
