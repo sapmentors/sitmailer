@@ -27,7 +27,6 @@
 			<groupId>com.sap.cloud</groupId>
 			<artifactId>neo-java-web-api</artifactId>
 			<version>${hcp.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
