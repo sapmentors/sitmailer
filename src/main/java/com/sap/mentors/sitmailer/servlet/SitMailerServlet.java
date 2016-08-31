@@ -126,7 +126,7 @@ public class SitMailerServlet extends HttpServlet {
 
 			// Confirm mail sending
 			response.getWriter()
-					.println("E-mail was sent");
+					.println("Thanks, your E-mail was sent");
 		} catch (Exception e) {
 			LOGGER.error("Mail operation failed", e);
 			throw new ServletException(e);
