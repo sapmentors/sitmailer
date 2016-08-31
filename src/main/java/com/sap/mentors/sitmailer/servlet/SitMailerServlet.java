@@ -110,6 +110,7 @@ public class SitMailerServlet extends HttpServlet {
 			InternetAddress[] fromAddress = InternetAddress.parse(from);
 			InternetAddress[] toAddresses = InternetAddress.parse(to);
 			mimeMessage.setFrom(fromAddress[0]);
+			mimeMessage.setReplyTo(fromAddress);
 			mimeMessage.setRecipients(RecipientType.TO, toAddresses);
 			mimeMessage.setSubject(subjectText, "UTF-8");
 			MimeMultipart multiPart = new MimeMultipart("alternative");
